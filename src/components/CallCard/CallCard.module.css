@@ -1,0 +1,44 @@
+.cardContainer{
+    border: 2px solid hsl(60,3.45%,94.31%);
+    border-radius: 12px;
+    padding: 16px 20px;
+    padding-right: 0;
+    background-color: hsl(0,0%,100%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+    min-height: 71px;
+    margin-right: 2px;
+}
+.phoneIcon{
+
+}
+.callDetails{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+.callFrom{
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: hsl(0,0%,32.75%);
+}
+.callTo{
+    color: hsl(0,0%,58.24%);
+}
+.callTime{
+color: hsl(0,0%,58.24%);
+display: flex;
+align-items: center;
+}
+.amPm{
+    border: 1px solid hsl(0,0%,88.24%);
+    border-right-width: 0;
+    border-radius: 4px 0 0 4px;
+    margin-left: 4px;
+    padding: 3px;
+    font-size: 0.65rem;
+}
