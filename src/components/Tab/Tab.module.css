@@ -1,0 +1,17 @@
+.tab{
+    color: hsl(0,0%,32.75%);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background-color: hsl(0,0%,100%);
+    border:2px solid hsl(60,3.45%,94.31%);
+    transition: 300ms ease;
+    text-align: center;
+    flex: 1 1 auto;
+    cursor: pointer;
+}
+
+.tab.isActive{
+    background-color: hsl(84, 94%, 81%);
+}
