@@ -1,0 +1,15 @@
+.btn{
+    border-radius: 10px;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    padding: 12px;
+    background-color:hsl(0,0%,85%);
+    color: hsl(0,0%,32.75%);
+    border: none;
+    outline: none;
+    position: absolute;
+    bottom:40px;
+    right:20px;
+    cursor: pointer;
+}
