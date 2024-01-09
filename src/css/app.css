@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600&display=swap");
 #app {
   position: absolute;
   display: flex;
@@ -16,9 +16,9 @@
   height: 666px;
   z-index: 100;
   padding: 0 16px;
-  background: hsl(60,20%,99.02%);
+  background: hsl(60, 20%, 99.02%);
   border-radius: 3px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .9);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.9);
 }
 
 #app .container-view {
@@ -26,9 +26,9 @@
   position: relative;
   min-height: calc(100% - 40px);
 }
-.callCardsContainer{
+.callCardsContainer {
   padding-top: 16px;
-  height: 550px ;
+  height: 550px;
   overflow-y: auto;
 }
 
@@ -38,11 +38,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: hsl(60,20%,85%);
-  border-radius: 4px; 
+  background-color: hsl(60, 20%, 85%);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-track {
   background-color: #f0f0f0;
 }
-
