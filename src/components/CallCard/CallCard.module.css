@@ -12,9 +12,6 @@
     min-height: 71px;
     margin-right: 2px;
 }
-.phoneIcon{
-
-}
 
 .callDetailsContainer{
     flex-grow: 1;
@@ -27,7 +24,8 @@
 .callDetails{
     display: flex;
     flex-direction: column;
-    gap: 8px
+    gap: 8px;
+    min-width: 70%;
 }
 .callFrom{
     font-weight: bold;
