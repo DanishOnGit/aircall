@@ -1,0 +1,40 @@
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px); /* Semi-transparent black backdrop for the blur effect */
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal.open {
+    display: flex;
+  }
+  
+  .modal-content {
+    background: hsl(0,0%,99.5%);
+    min-height: 150px;
+    width: 90%;
+    border-radius: 12px;
+    border: 1px solid hsl(0,0%,95%);
+  }
+
+  .detail{
+    margin-bottom: 8px;
+  }
+
+  .contentBody{
+    min-height: 150px;
+    padding: 12px 20px;
+  }
+
+  .header{
+    border-bottom: 1px solid hsl(0,0%,95%);
+    text-align: center;
+    color: hsl(0,0%,32.75%);
+    font-size: 0.875rem;
+    padding: 12px;
+  }
