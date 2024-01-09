@@ -16,7 +16,7 @@
   
   .modal-content {
     background: hsl(0,0%,99.5%);
-    min-height: 150px;
+    min-height: 220px;
     width: 90%;
     border-radius: 12px;
     border: 1px solid hsl(0,0%,95%);
@@ -24,7 +24,8 @@
   }
 
   .detail{
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    font-size: 0.875rem;
   }
 
   .contentBody{
@@ -34,8 +35,13 @@
 
   .header{
     border-bottom: 1px solid hsl(0,0%,95%);
-    text-align: center;
     color: hsl(0,0%,32.75%);
-    font-size: 0.875rem;
-    padding: 12px;
+    font-size: 1.125rem;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header svg{
+    cursor: pointer;
   }

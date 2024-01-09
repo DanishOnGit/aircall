@@ -3,7 +3,8 @@ import styles from "./CallDetails.module.css"
 import { BASE_API_URL } from '../../utils/constant';
 import { formatTimestamp, getAmPm } from '../../utils/utils'
 import Spinner from '../Loader/index.jsx';
-
+import { motion } from 'framer-motion'
+import { Close } from '../../icons/icons.js';
 const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
     const [callDetails, setCallDetails] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -14,13 +15,20 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
     }
     useEffect(() => {
         setIsLoading(true)
-        fetch(`${BASE_API_URL}/activities/${selectedCallId}`).then(res => res.json()).then(data => setCallDetails(data)).catch(console.error).finally(()=>setIsLoading(false))
+        fetch(`${BASE_API_URL}/activities/${selectedCallId}`).then(res => res.json()).then(data => setCallDetails(data)).catch(console.error).finally(() => setIsLoading(false))
     }, [])
 
     return (
         <div className={`${styles.modal} ${isOpen ? styles.open : ''}`} onClick={onClose} >
-            <div className={styles["modal-content"]} onClick={(e) => e.stopPropagation()}>
-                <div className={styles.header}><b>Call Details</b></div>
+            <motion.div initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    duration: 0.5,
+                    ease: [0, 0.71, 0.2, 1.01]
+                }}
+             className={styles["modal-content"]} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.header}><b>Call Details</b>
+                <Close onClick={onClose}/></div>
                 {isLoading ? <Spinner /> : <div className={styles.contentBody}>
                     {
                         callDetails ? <div>
@@ -33,7 +41,7 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
                         </div> : "No details found"
                     }
                 </div>}
-            </div>
+            </motion.div>
         </div>
     )
 }

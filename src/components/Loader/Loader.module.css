@@ -18,7 +18,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background: #FF3D00;
+    background: hsl(84, 94%, 81%);
     width: 6px;
     height: 6px;
     transform: translate(150%, 150%);

@@ -4,7 +4,7 @@ import { IncomingCall, Information, MissedCall, OutgoingCall, Voicemail } from '
 import { formatTimestamp, getAmPm } from '../../utils/utils'
 import CallDetails from '../CallDetails/index.jsx'
 import { createPortal } from 'react-dom'
-
+import {motion} from 'framer-motion'
 const CallCard = ({ direction = 'inbound', callType = 'answered', from, to, createDate,id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCallId, setSelectedCallId] = useState(null);
@@ -30,9 +30,13 @@ const CallCard = ({ direction = 'inbound', callType = 'answered', from, to, crea
     if (direction === 'inbound' && callType === 'voicemail') return <Voicemail />
   }
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
 
   return (
-    <div className={styles.cardContainer}>
+    <motion.div variants={cardVariants} className={styles.cardContainer}>
       <div>
         {getCallIcon(direction, callType)}
       </div>
@@ -50,7 +54,7 @@ const CallCard = ({ direction = 'inbound', callType = 'answered', from, to, crea
         </span>
       </div>
       {isModalOpen && createPortal(<CallDetails selectedCallId={selectedCallId} isOpen={isModalOpen} onClose={closeModal}/>,document.getElementById("root")) }
-    </div>
+    </motion.div>
   )
 }
 

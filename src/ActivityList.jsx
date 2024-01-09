@@ -5,6 +5,7 @@ import { ArchiveAll, UnArchiveAll } from './icons/icons'
 import CallCard from './components/CallCard/CallCard.jsx'
 import EmptyState from './components/EmptyState/index.jsx'
 import Spinner from './components/Loader/index.jsx'
+import {motion} from 'framer-motion';
 
 const ActivityList = ({activeTab}) => {
     const [activity, setActivity] = useState([])
@@ -58,15 +59,25 @@ const ActivityList = ({activeTab}) => {
         fetchActivity()
       }, [])
     
-      const filteredData=filterData(activity)
+    const filteredData=filterData(activity)
+    
+    
+      const containerVariants = {
+        visible: { transition: { staggerChildren: 0.1 } }
+      };
    if(isLoading) return <Spinner/>
+
     return (
-        <div className='callCardsContainer'>
+        <motion.div 
+        initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+         className='callCardsContainer'>
             {
                 filteredData.map(call => <CallCard id={call.id} key={call.id} direction={call.direction} callType={call.call_type} from={call.from} to={call.to} createDate={call.created_at} />)
             }
             <FloatBtn onClick={activeTab === tabs.activityFeed ? archiveAllCalls : unArchiveAllCalls} icon={activeTab === tabs.activityFeed ? <ArchiveAll /> : <UnArchiveAll />} />
-        </div>
+        </motion.div>
     )
 }
 
