@@ -18,7 +18,7 @@
 
 .modal-content {
   background: hsl(0, 0%, 99.5%);
-  min-height: 220px;
+  min-height: 256px;
   width: 90%;
   border-radius: 12px;
   border: 1px solid hsl(0, 0%, 95%);
@@ -46,4 +46,28 @@
 }
 .header svg {
   cursor: pointer;
+}
+
+.btn {
+  color: hsl(0, 0%, 32.75%);
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: hsl(0, 0%, 97%);
+  border: 1px solid hsl(60, 3.45%, 94.31%);
+  transition: 200ms ease;
+  text-align: center;
+  cursor: pointer;
+  margin-left: auto;
+  display: block;
+}
+
+.btn:hover {
+  background-color: hsl(0, 0%, 93%);
+}
+
+.footer {
+  border-top: 1px solid hsl(0, 0%, 95%);
+  padding: 4px 20px;
 }

@@ -9,6 +9,22 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
   const [callDetails, setCallDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const archiveCall = (callId) => {
+    setIsLoading(true);
+    const endpoint = `${BASE_API_URL}/activities/${callId}`;
+    return fetch(endpoint, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        is_archived: true,
+      }),
+    })
+      .then((res) => res.json())
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
   const makeFirstLetterCaps = (str) => {
     if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -72,6 +88,14 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
             )}
           </div>
         )}
+        <div className={styles.footer}>
+          <button
+            className={styles.btn}
+            onClick={() => archiveCall(selectedCallId)}
+          >
+            Archive call
+          </button>
+        </div>
       </motion.div>
     </div>
   );
