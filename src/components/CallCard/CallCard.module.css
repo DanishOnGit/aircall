@@ -15,11 +15,19 @@
 .phoneIcon{
 
 }
+
+.callDetailsContainer{
+    flex-grow: 1;
+    display: flex;
+    gap: 16px;
+}
+.callDetailsContainer svg{
+    cursor: pointer;
+}
 .callDetails{
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex-grow: 1;
+    gap: 8px
 }
 .callFrom{
     font-weight: bold;
