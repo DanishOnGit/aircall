@@ -4,10 +4,11 @@ import FloatBtn from './components/FloatBtn/index.jsx'
 import { ArchiveAll, UnArchiveAll } from './icons/icons'
 import CallCard from './components/CallCard/CallCard.jsx'
 import EmptyState from './components/EmptyState/index.jsx'
+import Spinner from './components/Loader/index.jsx'
 
 const ActivityList = ({activeTab}) => {
     const [activity, setActivity] = useState([])
-
+    const [isLoading,setIsLoading]= useState(false)
     const archiveCall = (callId) => {
     const endpoint = `${BASE_API_URL}/activities/${callId}`
     return fetch(endpoint, {
@@ -47,9 +48,10 @@ const ActivityList = ({activeTab}) => {
       }
     
       const fetchActivity = () => {
-        setTimeout(() => {
-            fetch(`${BASE_API_URL}/activities`).then(res => res.json()).then(data => setActivity(data))
-        }, 2000);
+        setIsLoading(true)
+        fetch(`${BASE_API_URL}/activities`).then(res => res.json()).then(data => setActivity(data)).catch(console.error).finally(()=>{
+            setIsLoading(false)
+        })
       }
     
       useEffect(() => {
@@ -57,7 +59,7 @@ const ActivityList = ({activeTab}) => {
       }, [])
     
       const filteredData=filterData(activity)
-    //   if(!filteredData.length) return <EmptyState text={"No activity found"}/>
+   if(isLoading) return <Spinner/>
     return (
         <div className='callCardsContainer'>
             {

@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react'
 import styles from "./CallDetails.module.css"
 import { BASE_API_URL } from '../../utils/constant';
 import { formatTimestamp, getAmPm } from '../../utils/utils'
-const CallDetails = ({ from, to, via, duration, calType, onClose, isOpen, selectedCallId }) => {
-    const [callDetails, setCallDetails] = useState(null)
+import Spinner from '../Loader/index.jsx';
 
-    const makeFirstLetterCaps=(str)=>{
-    return str.charAt(0).toUpperCase() + str.slice(1)
+const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
+    const [callDetails, setCallDetails] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+
+    const makeFirstLetterCaps = (str) => {
+        if (!str) return ""
+        return str.charAt(0).toUpperCase() + str.slice(1)
     }
     useEffect(() => {
-        fetch(`${BASE_API_URL}/activities/${selectedCallId}`).then(res => res.json()).then(data => setCallDetails(data))
+        setIsLoading(true)
+        fetch(`${BASE_API_URL}/activities/${selectedCallId}`).then(res => res.json()).then(data => setCallDetails(data)).catch(console.error).finally(()=>setIsLoading(false))
     }, [])
 
     return (
         <div className={`${styles.modal} ${isOpen ? styles.open : ''}`} onClick={onClose} >
             <div className={styles["modal-content"]} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}><b>Call Details</b></div>
-                <div className={styles.contentBody}>
+                {isLoading ? <Spinner /> : <div className={styles.contentBody}>
                     {
                         callDetails ? <div>
                             <p className={styles.detail}><b>From:</b> {callDetails.from}</p>
@@ -27,7 +32,7 @@ const CallDetails = ({ from, to, via, duration, calType, onClose, isOpen, select
                             <p className={styles.detail}><b>Time:</b> {formatTimestamp(callDetails.created_at)} {getAmPm(callDetails.created_at)}</p>
                         </div> : "No details found"
                     }
-                </div>
+                </div>}
             </div>
         </div>
     )

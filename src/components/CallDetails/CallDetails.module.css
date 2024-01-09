@@ -20,6 +20,7 @@
     width: 90%;
     border-radius: 12px;
     border: 1px solid hsl(0,0%,95%);
+    position: relative;
   }
 
   .detail{

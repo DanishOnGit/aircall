@@ -11,6 +11,7 @@
 }
 
 #app .container {
+  position: relative;
   width: 420px;
   height: 666px;
   z-index: 100;
@@ -23,6 +24,7 @@
 #app .container-view {
   padding: 20px 0;
   position: relative;
+  min-height: calc(100% - 40px);
 }
 .callCardsContainer{
   padding-top: 16px;
