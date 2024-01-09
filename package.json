@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production && echo '/* /index.html  200' | cat >dist/_redirects"
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "framer-motion": "^10.17.11",
