@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import toast from "react-simple-toasts";
 import { useActivity } from "./contexts/ActivityContext.jsx";
 
+
 const ActivityList = ({ activeTab }) => {
   const { activity, setActivity } = useActivity();
   const [isLoading, setIsLoading] = useState(false);
