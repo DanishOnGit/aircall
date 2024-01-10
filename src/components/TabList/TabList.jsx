@@ -1,5 +1,5 @@
 import React from "react";
-import Tab from "../Tab/index.jsx";
+import Tab from "../Tab/Tab.jsx";
 import styles from "./TabList.module.css";
 const TabList = ({ tabs = [], onTabSelect, activeTab }) => {
   return (

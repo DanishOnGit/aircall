@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BASE_API_URL, tabs } from "./utils/constant";
-import FloatBtn from "./components/FloatBtn/index.jsx";
+import FloatBtn from "./components/FloatBtn/FloatBtn.jsx";
 import { ArchiveAll, UnArchiveAll } from "./icons/icons";
 import CallCard from "./components/CallCard/CallCard.jsx";
-import EmptyState from "./components/EmptyState/index.jsx";
-import Spinner from "./components/Loader/index.jsx";
+import EmptyState from "./components/EmptyState/EmptyState.jsx";
+import Spinner from "./components/Loader/Loader.jsx";
 import { motion } from "framer-motion";
 
 const ActivityList = ({ activeTab }) => {

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CallDetails.module.css";
-import { BASE_API_URL } from "../../utils/constant";
-import { formatTimestamp, getAmPm } from "../../utils/utils";
-import Spinner from "../Loader/index.jsx";
+import { BASE_API_URL, tabs } from "../../utils/constant.js";
+import { formatTimestamp, getAmPm } from "../../utils/utils.js";
+import Spinner from "../Loader/Loader.jsx";
 import { motion } from "framer-motion";
 import { Close } from "../../icons/icons.js";
+import { useActivity } from '../../contexts/ActivityContext.jsx';
 const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
   const [callDetails, setCallDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const {activeTab}=useActivity()
   const archiveCall = (callId) => {
     setIsLoading(true);
     const endpoint = `${BASE_API_URL}/activities/${callId}`;
@@ -88,14 +89,14 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
             )}
           </div>
         )}
-        <div className={styles.footer}>
+        {activeTab!==tabs.archive && <div className={styles.footer}>
           <button
             className={styles.btn}
             onClick={() => archiveCall(selectedCallId)}
           >
             Archive call
           </button>
-        </div>
+        </div>}
       </motion.div>
     </div>
   );

@@ -8,7 +8,7 @@ import {
   Voicemail,
 } from "../../icons/icons";
 import { formatTimestamp, getAmPm } from "../../utils/utils";
-import CallDetails from "../CallDetails/index.jsx";
+import CallDetails from "../CallDetails/CallDetails.jsx";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 const CallCard = ({

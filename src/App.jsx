@@ -1,21 +1,18 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Header from "./Header.jsx";
-import CallCard from "./components/CallCard/CallCard.jsx";
-import TabList from "./components/TabList/index.jsx";
-import FloatBtn from "./components/FloatBtn/index.jsx";
-import { ArchiveAll, UnArchiveAll } from "./icons/icons.js";
-import { BASE_API_URL, tabList, tabs } from "./utils/constant.js";
-import EmptyState from "./components/EmptyState/index.jsx";
+import TabList from "./components/TabList/TabList.jsx";
+import { tabList, tabs } from "./utils/constant.js";
 import toast, { toastConfig } from "react-simple-toasts";
 import "react-simple-toasts/dist/theme/dark.css";
 import "react-simple-toasts/dist/theme/warning.css";
-import Spinner from "./components/Loader/index.jsx";
+import Spinner from "./components/Loader/Loader.jsx";
 import ActivityList from "./ActivityList.jsx";
+import {useActivity} from "./contexts/ActivityContext.jsx"
 
 toastConfig({ theme: "dark" });
 const App = () => {
-  const [activeTab, setActiveTab] = useState(tabs.activityFeed);
-
+  const {totalCalls,activeTab,setActiveTab}= useActivity()
+  
   const onTabSelect = (tabName) => {
     if (!tabName) throw Error("Please select valid tab name");
     setActiveTab(tabName);
