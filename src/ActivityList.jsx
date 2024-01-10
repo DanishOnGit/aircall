@@ -12,6 +12,8 @@ import { useActivity } from "./contexts/ActivityContext.jsx";
 const ActivityList = ({ activeTab }) => {
   const { activity, setActivity } = useActivity();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingActivity, setIsLoadingActivity] = useState(false);
+  
   const archiveCall = (callId) => {
     const endpoint = `${BASE_API_URL}/activities/${callId}`;
     return fetch(endpoint, {
@@ -67,13 +69,13 @@ const ActivityList = ({ activeTab }) => {
   };
 
   const fetchActivity = () => {
-    setIsLoading(true);
+    setIsLoadingActivity(true);
     fetch(`${BASE_API_URL}/activities`)
       .then((res) => res.json())
       .then((data) => setActivity(data))
       .catch(console.error)
       .finally(() => {
-        setIsLoading(false);
+        setIsLoadingActivity(false);
       });
   };
 
@@ -87,9 +89,13 @@ const ActivityList = ({ activeTab }) => {
   const containerVariants = {
     visible: { transition: { staggerChildren: 0.1 } },
   };
-  if (isLoading) return <Spinner />;
+
+  if (isLoading || isLoadingActivity) return <Spinner />;
+
   if(!archivedCalls.length && activeTab===tabs.archive) return <EmptyState text={"No calls here"}/>
+
   if(!unArchivedCalls.length && activeTab===tabs.activityFeed) return <EmptyState text={"No calls here"}/>
+
   return (
     <motion.div
       initial="hidden"
