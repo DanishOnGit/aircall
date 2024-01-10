@@ -13,7 +13,7 @@ const ActivityList = ({ activeTab }) => {
   const { activity, setActivity } = useActivity();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingActivity, setIsLoadingActivity] = useState(false);
-  
+
   const archiveCall = (callId) => {
     const endpoint = `${BASE_API_URL}/activities/${callId}`;
     return fetch(endpoint, {
@@ -35,7 +35,8 @@ const ActivityList = ({ activeTab }) => {
     Promise.allSettled(promiseList)
       .then((res) => {
         let callFail = res.find((item) => {
-          return !item.value.ok
+          if (item.status === "rejected" || (item.value && item.value.ok) === false)
+            return item;
         });
         if (callFail)
           return toast("Some calls could not be archived", {
@@ -43,7 +44,7 @@ const ActivityList = ({ activeTab }) => {
           });
       })
       .catch((error) => {
-        toast("Failed to archive a call", { theme: "failure" });
+        toast("Please try again", { theme: "failure" });
       })
       .finally(() => {
         setIsLoading(false);
@@ -84,17 +85,19 @@ const ActivityList = ({ activeTab }) => {
   }, []);
 
   const filteredData = filterData(activity);
-  const archivedCalls = activity.filter(call=>call.is_archived)
-  const unArchivedCalls = activity.filter(call=>!call.is_archived)
+  const archivedCalls = activity.filter((call) => call.is_archived);
+  const unArchivedCalls = activity.filter((call) => !call.is_archived);
   const containerVariants = {
     visible: { transition: { staggerChildren: 0.1 } },
   };
 
   if (isLoading || isLoadingActivity) return <Spinner />;
 
-  if(!archivedCalls.length && activeTab===tabs.archive) return <EmptyState text={"No calls here"}/>
+  if (!archivedCalls.length && activeTab === tabs.archive)
+    return <EmptyState text={"No calls here"} />;
 
-  if(!unArchivedCalls.length && activeTab===tabs.activityFeed) return <EmptyState text={"No calls here"}/>
+  if (!unArchivedCalls.length && activeTab === tabs.activityFeed)
+    return <EmptyState text={"No calls here"} />;
 
   return (
     <motion.div

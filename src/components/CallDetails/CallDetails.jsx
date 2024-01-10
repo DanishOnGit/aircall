@@ -33,7 +33,7 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
       });
   };
 
-  const archiveCall = (callId) => {
+  const archiveOrUnarchiveCall = (callId,archive) => {
     setIsLoading(true);
     const endpoint = `${BASE_API_URL}/activities/${callId}`;
     return fetch(endpoint, {
@@ -42,21 +42,31 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        is_archived: true,
+        is_archived:archive,
       }),
     })
       .then((res) =>{
         if(res.ok){
-          toast("Call archived", { theme: "success" });
+          if(archive===true){
+            toast("Call archived", { theme: "success" });
+          }
+          if(archive===false){
+            toast("Call Unarchived", { theme: "success" });
+          }
           fetchActivity();
           setTimeout(()=>onClose(),1000)
         }else{
-        toast("Unable to archive call", { theme: "failure" });
+          if(archive===true){
+            toast("Unable to archive call", { theme: "failure" });
+          }
+          if(archive===false){
+            toast("Could not Unarchive call", { theme: "failure" });
+          }
         }
       })
       .catch((error) => {
         console.error(error);
-        toast("Unable to archive call", { theme: "failure" });
+        toast("Please try again", { theme: "failure" });
       })
       .finally(() => setIsLoading(false));
   };
@@ -124,13 +134,16 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
             )}
           </div>
         )}
-        {activeTab !== tabs.archive && !isLoading && (
+        {!isLoading && (
           <div className={styles.footer}>
             <button
               className={styles.btn}
-              onClick={() => archiveCall(selectedCallId)}
+              onClick={() =>{
+                activeTab===tabs.archive?archiveOrUnarchiveCall(selectedCallId,false):
+                 archiveOrUnarchiveCall(selectedCallId,true)
+                }}
             >
-              Archive call
+              {activeTab===tabs.archive?"Unarchive call":"Archive call"}
             </button>
           </div>
         )}
