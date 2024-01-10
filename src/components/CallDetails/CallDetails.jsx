@@ -3,13 +3,36 @@ import styles from "./CallDetails.module.css";
 import { BASE_API_URL, tabs } from "../../utils/constant.js";
 import { formatTimestamp, getAmPm } from "../../utils/utils.js";
 import Spinner from "../Loader/Loader.jsx";
-import { motion } from "framer-motion";
+import { motion,AnimatePresence } from "framer-motion";
 import { Close } from "../../icons/icons.js";
-import { useActivity } from '../../contexts/ActivityContext.jsx';
+import { useActivity } from "../../contexts/ActivityContext.jsx";
+import toast from "react-simple-toasts";
+
 const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
   const [callDetails, setCallDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const {activeTab}=useActivity()
+  const { activeTab,setActivity } = useActivity();
+
+  const motionObj={
+    initial:{ opacity: 0, scale: 0 },
+    animate:{ opacity: 1, scale: 1 },
+    transition:{
+      duration: 0.5,
+      ease: [0, 0.71, 0.2, 1.01],
+    }
+  }
+
+  const fetchActivity = () => {
+    setIsLoading(true);
+    fetch(`${BASE_API_URL}/activities`)
+      .then((res) => res.json())
+      .then((data) => setActivity(data))
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const archiveCall = (callId) => {
     setIsLoading(true);
     const endpoint = `${BASE_API_URL}/activities/${callId}`;
@@ -22,14 +45,27 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
         is_archived: true,
       }),
     })
-      .then((res) => res.json())
-      .catch(console.error)
+      .then((res) =>{
+        if(res.ok){
+          toast("Call archived", { theme: "success" });
+          fetchActivity();
+          setTimeout(()=>onClose(),1000)
+        }else{
+        toast("Unable to archive call", { theme: "failure" });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast("Unable to archive call", { theme: "failure" });
+      })
       .finally(() => setIsLoading(false));
   };
+
   const makeFirstLetterCaps = (str) => {
     if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`${BASE_API_URL}/activities/${selectedCallId}`)
@@ -40,17 +76,16 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
   }, []);
 
   return (
+    <AnimatePresence>
     <div
       className={`${styles.modal} ${isOpen ? styles.open : ""}`}
       onClick={onClose}
     >
+      
       <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.5,
-          ease: [0, 0.71, 0.2, 1.01],
-        }}
+        initial={motionObj.initial}
+        animate={motionObj.animate}
+        transition={motionObj.transition}
         className={styles["modal-content"]}
         onClick={(e) => e.stopPropagation()}
       >
@@ -89,16 +124,19 @@ const CallDetails = ({ onClose, isOpen, selectedCallId }) => {
             )}
           </div>
         )}
-        {activeTab!==tabs.archive && <div className={styles.footer}>
-          <button
-            className={styles.btn}
-            onClick={() => archiveCall(selectedCallId)}
-          >
-            Archive call
-          </button>
-        </div>}
+        {activeTab !== tabs.archive && !isLoading && (
+          <div className={styles.footer}>
+            <button
+              className={styles.btn}
+              onClick={() => archiveCall(selectedCallId)}
+            >
+              Archive call
+            </button>
+          </div>
+        )}
       </motion.div>
     </div>
+      </AnimatePresence>
   );
 };
 

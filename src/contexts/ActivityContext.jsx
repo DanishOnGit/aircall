@@ -5,10 +5,10 @@ export const ActivityContext = createContext();
 
 export const ActivityProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState(tabs.activityFeed);
-  const [totalCalls, setTotalCalls] = useState(0);
+  const [activity, setActivity] = useState([]);
   return (
     <ActivityContext.Provider
-      value={{ activeTab, setActiveTab, totalCalls, setTotalCalls }}
+      value={{ activeTab, setActiveTab,activity,setActivity }}
     >
       {children}
     </ActivityContext.Provider>
